@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#e8734a" />
+    <title>Cook Convert</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Cook Convert</h1>
+    </header>
+
+    <main>
+      <!-- CONVERT VIEW -->
+      <section id="view-convert" class="view" data-view>
+        <div class="segmented" id="category-tabs">
+          <button class="segmented-btn active" data-category="volume">Volume</button>
+          <button class="segmented-btn" data-category="weight">Weight</button>
+          <button class="segmented-btn" data-category="temperature">Oven Temp</button>
+          <button class="segmented-btn" data-category="ingredient">Ingredient</button>
+        </div>
+
+        <!-- Volume / Weight / Temperature share this generic layout -->
+        <div id="generic-converter" class="card">
+          <div class="convert-row">
+            <input type="number" id="from-value" inputmode="decimal" placeholder="0" />
+            <select id="from-unit"></select>
+          </div>
+          <button id="swap-btn" class="swap-btn" title="Swap units" aria-label="Swap units">⇅</button>
+          <div class="convert-row">
+            <input type="number" id="to-value" inputmode="decimal" placeholder="0" readonly />
+            <select id="to-unit"></select>
+          </div>
+        </div>
+
+        <!-- Ingredient-aware cup <-> gram layout -->
+        <div id="ingredient-converter" class="card hidden">
+          <label for="ingredient-select">Ingredient</label>
+          <select id="ingredient-select"></select>
+          <div class="convert-row">
+            <input type="number" id="cups-value" inputmode="decimal" placeholder="0" />
+            <span class="unit-label">cups</span>
+          </div>
+          <button class="swap-btn" title="Cups to grams">⇅</button>
+          <div class="convert-row">
+            <input type="number" id="grams-value" inputmode="decimal" placeholder="0" />
+            <span class="unit-label">grams</span>
+          </div>
+        </div>
+
+        <button id="save-favorite-btn" class="secondary-btn">☆ Save to Favorites</button>
+      </section>
+
+      <!-- SCALE RECIPE VIEW -->
+      <section id="view-scale" class="view hidden" data-view>
+        <div class="card">
+          <label for="original-servings">Original servings</label>
+          <input type="number" id="original-servings" inputmode="numeric" value="4" min="1" />
+          <label for="target-servings">Target servings</label>
+          <input type="number" id="target-servings" inputmode="numeric" value="4" min="1" />
+        </div>
+
+        <div id="ingredient-rows" class="card"></div>
+        <button id="add-ingredient-row" class="secondary-btn">+ Add ingredient</button>
+
+        <div id="pro-banner" class="pro-banner hidden">
+          <p>Free plan is limited to 3 ingredients. Unlock Pro for unlimited ingredients &amp; recipe saving.</p>
+          <button id="unlock-pro-btn" class="primary-btn">Unlock Pro (Demo)</button>
+        </div>
+
+        <button id="save-recipe-btn" class="secondary-btn">☆ Save Recipe to Favorites</button>
+
+        <div class="card" id="scaled-output">
+          <h3>Scaled recipe</h3>
+          <ul id="scaled-list"></ul>
+        </div>
+      </section>
+
+      <!-- FAVORITES VIEW -->
+      <section id="view-favorites" class="view hidden" data-view>
+        <div class="card" id="favorites-list">
+          <p id="favorites-empty" class="empty-state">No favorites saved yet.</p>
+        </div>
+      </section>
+    </main>
+
+    <nav class="tab-bar">
+      <button class="tab-btn active" data-view-target="view-convert">
+        <span>Convert</span>
+      </button>
+      <button class="tab-btn" data-view-target="view-scale">
+        <span>Scale Recipe</span>
+      </button>
+      <button class="tab-btn" data-view-target="view-favorites">
+        <span>Favorites</span>
+      </button>
+    </nav>
+
+    <script src="densities.js"></script>
+    <script src="converter.js"></script>
+    <script src="scaler.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
